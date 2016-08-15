@@ -12,6 +12,12 @@ positive = 0
 neutral = 0
 negative = 0
 count = 0
+positiveTweets = ""
+negativeTweets = ""
+neutralTweets = ""
+p = 1
+nu = 1
+ng = 1
 for (i in seq(1, length(FileNames)))
 {
   excelSheetData = read.xlsx(paste0("ExcelSheets/", FileNames[i]), startRow = 0, colNames = TRUE, detectDates = TRUE)
@@ -20,14 +26,26 @@ for (i in seq(1, length(FileNames)))
   
   rows <- countRows
   count = count + rows
-  data = excelSheetData[, c("polarity", "polarity_confidence")]
+  data = excelSheetData[, c("polarity", "polarity_confidence", "Text")]
   for (j in seq(1, rows)){
     if(data[j, 1] == "positive")
+    {
       positive = positive + data[j, 2]
+      positiveTweets = paste0(positiveTweets, paste0(paste(paste0(p, ":"), data[j,3]), "\n"))
+      p = p + 1
+    }
     else if(data[j, 1] == "negative")
+    {
       negative = negative + data[j, 2]
+      negativeTweets = paste0(negativeTweets, paste0(paste(paste0(ng, ":"), data[j,3]), "\n"))
+      ng = ng + 1
+    }
     else
+    {
       neutral = neutral + data[j, 2]
+      neutralTweets = paste0(neutralTweets, paste0(paste(paste0(nu, ":"), data[j,3]), "\n"))
+      nu = nu + 1
+    }
   }
 }
 total <- positive + negative + neutral
@@ -37,12 +55,17 @@ neutralPercent <- round((neutral * 100) / total)
 
 countVect = c(positive, neutral, negative)
 
+
 shinyUI(dashboardPage(
   dashboardHeader(title = "Sentiment Analysis"),
   dashboardSidebar(
     sidebarMenu(
       menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
-      menuItem("Charts", tabName = "Charts", icon = icon("line-chart"))
+      menuItem("Tweets", icon = icon("twitter"),
+               menuSubItem("Positive Tweets", tabName = "pTweets", icon = icon("thumbs-up")),
+               menuSubItem("Neutral Tweets", tabName = "neuTweets", icon = icon("hand-spock-o")),
+               menuSubItem("Negative Tweets", tabName = "negTweets", icon = icon("thumbs-down"))
+      )
     )
   ),
   ## Body content
@@ -63,9 +86,20 @@ shinyUI(dashboardPage(
               )
       ),
       
-      # Second tab content
-      tabItem(tabName = "Charts",
-              h2("Widgets tab content")
+      # Positive Tweets tab content
+      tabItem(tabName = "pTweets",
+              h2("Positive Tweets #Brexit"),
+              h4(positiveTweets)
+      ),
+      # Neutral Tweets tab content
+      tabItem(tabName = "neuTweets",
+              h2("Neutral Tweets #Brexit"),
+              h4(neutralTweets)
+      ),
+      # Negative Tweets tab content
+      tabItem(tabName = "negTweets",
+              h2("Negative Tweets #Brexit"),
+              h4(negativeTweets)
       )
     )
   )
