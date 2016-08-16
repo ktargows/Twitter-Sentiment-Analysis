@@ -70,11 +70,11 @@ shinyUI(dashboardPage(
   ),
   ## Body content
   dashboardBody(
-    
     tabItems(
       # First tab content
       tabItem(tabName = "dashboard",
-              div(class = "my-class", h2("Sentiment Analysis of Twitter Tweets using RapidMinor and Shiny Dashboard.")),
+              div(class = "titleText", h2(HTML("<center><b>Sentiment Analysis</b> of Twitter Tweets using <i>RapidMinor</i> and <i>Shiny Dashboard</i>.</center>"))),
+              div(class = "Author", h5(HTML("<center>- By Rushabh Wadkar & Ankit Agarwal.</center><br>"))),
               fluidRow(
                 valueBox(count, "Total Number of Tweets Analyzed in the competition", icon = icon("twitter"), width = 6),
                 valueBox(countDays, "Number of Days ", icon = icon("calendar-check-o"), width = 6, color = "yellow")
