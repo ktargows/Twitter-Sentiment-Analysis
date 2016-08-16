@@ -31,19 +31,19 @@ for (i in seq(1, length(FileNames)))
     if(data[j, 1] == "positive")
     {
       positive = positive + data[j, 2]
-      positiveTweets = paste0(positiveTweets, paste0(paste(paste0(p, ":"), data[j,3]), "\n"))
+      positiveTweets = paste0(positiveTweets, paste0(paste(paste0(p, ":"), data[j,3]), "<br><br>"))
       p = p + 1
     }
     else if(data[j, 1] == "negative")
     {
       negative = negative + data[j, 2]
-      negativeTweets = paste0(negativeTweets, paste0(paste(paste0(ng, ":"), data[j,3]), "\n"))
+      negativeTweets = paste0(negativeTweets, paste0(paste(paste0(ng, ":"), data[j,3]), "<br><br>"))
       ng = ng + 1
     }
     else
     {
       neutral = neutral + data[j, 2]
-      neutralTweets = paste0(neutralTweets, paste0(paste(paste0(nu, ":"), data[j,3]), "\n"))
+      neutralTweets = paste0(neutralTweets, paste0(paste(paste0(nu, ":"), data[j,3]), "<br><br>"))
       nu = nu + 1
     }
   }
@@ -88,18 +88,18 @@ shinyUI(dashboardPage(
       
       # Positive Tweets tab content
       tabItem(tabName = "pTweets",
-              h2("Positive Tweets #Brexit"),
-              h4(positiveTweets)
+              h2(HTML("<center><b><span style='color: green'>Positive</span> Tweets <i>#Brexit</i></b></center>")),
+              h4(HTML(positiveTweets))
       ),
       # Neutral Tweets tab content
       tabItem(tabName = "neuTweets",
-              h2("Neutral Tweets #Brexit"),
-              h4(neutralTweets)
+              h2(HTML("<center><b><span style='color: blue'>Neutral</span> Tweets <i>#Brexit</i></b></center>")),
+              h4(HTML(neutralTweets))
       ),
       # Negative Tweets tab content
       tabItem(tabName = "negTweets",
-              h2("Negative Tweets #Brexit"),
-              h4(negativeTweets)
+              h2(HTML("<center><b><span style='color: red'>Negative</span> Tweets <i>#Brexit</i></b></center>")),
+              h4(HTML(negativeTweets))
       )
     )
   )
