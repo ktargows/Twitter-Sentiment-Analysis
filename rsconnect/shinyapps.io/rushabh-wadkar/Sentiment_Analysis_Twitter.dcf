@@ -1,0 +1,10 @@
+name: Sentiment_Analysis_Twitter
+account: rushabh-wadkar
+server: shinyapps.io
+appId: 121162
+bundleId: 536763
+url: https://rushabh-wadkar.shinyapps.io/Sentiment_Analysis_Twitter/
+when: 1471694205.74197
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: 3d_pie_chart.jpg
